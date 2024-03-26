@@ -66,9 +66,15 @@ int main(int argc, char **argv)
 
     auto opts = parseOpts(argc, argv);
 
-    RCLCPP_INFO(rclcpp::get_logger("simple_server"), "spin period (ms): %zu", opts.spinPeriodMilliseconds);
-
     auto node = std::make_shared<rclcpp::Node>("simple_server");
+
+    RCLCPP_INFO(node->get_logger(), "spin period (ms): %zu", opts.spinPeriodMilliseconds);
+
+    auto callbackGroup = node->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+
+    auto subOpts = rclcpp::SubscriptionOptions{ };
+
+    subOpts.callback_group = callbackGroup;
 
     //
     // service
@@ -83,7 +89,8 @@ int main(int argc, char **argv)
 
             return true;
         },
-        1);
+        1,
+        callbackGroup);
 
     //
     // odometry subscription
@@ -94,7 +101,8 @@ int main(int argc, char **argv)
         [](const nav_msgs::msg::Odometry::UniquePtr &odom)
         {
             (void) odom;
-        });
+        },
+        subOpts);
 
     // occupancy grid subscription
 
@@ -104,7 +112,8 @@ int main(int argc, char **argv)
         [](const nav_msgs::msg::OccupancyGrid::UniquePtr &grid)
         {
             (void) grid;
-        });
+        },
+        subOpts);
 
     auto executor = rclcpp::executors::SingleThreadedExecutor{ };
 
@@ -116,11 +125,11 @@ int main(int argc, char **argv)
     {
         const auto rateDeadline = std::chrono::steady_clock::now() + spinPeriod;
 
-        RCLCPP_INFO(rclcpp::get_logger("simple_server"), "before spin");
+        RCLCPP_INFO(node->get_logger(), "before spin");
 
         executor.spin_all(spinPeriod);
 
-        RCLCPP_INFO(rclcpp::get_logger("simple_server"), "after spin");
+        RCLCPP_INFO(node->get_logger(), "after spin");
 
         std::this_thread::sleep_until(rateDeadline);
     }
