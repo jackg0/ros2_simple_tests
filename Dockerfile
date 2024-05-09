@@ -1,6 +1,6 @@
 ARG ROS2_BASE_IMAGE=ROS2_BASE_IMAGE
 
-# Start from ros2 base image, assumes rolling is used
+# Start from ros2 base image, assumes jazzy is used
 FROM ${ROS2_BASE_IMAGE} as ros2-deps
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,7 +25,7 @@ RUN mkdir -p /src/Upstream
 ADD . /src/Upstream/ros2_simple_tests
 WORKDIR /src/Upstream/ros2_simple_tests
 
-RUN . /opt/ros/rolling/setup.bash && \
-    cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/ros/rolling && \
+RUN . /opt/ros/jazzy/setup.bash && \
+    cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/ros/jazzy && \
     cmake --build build -j $(nproc) && \
     cmake --install build
