@@ -101,15 +101,9 @@ int main(int argc, char **argv)
 
     auto opts = parseOpts(argc, argv);
 
-    RCLCPP_INFO(rclcpp::get_logger("simple_server"), "spin period (ms): %zu", opts.spinPeriodMilliseconds);
-
     auto node = std::make_shared<rclcpp::Node>("simple_server");
 
-    auto callbackGroup = node->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
-
-    auto subOpts = rclcpp::SubscriptionOptions{ };
-
-    subOpts.callback_group = callbackGroup;
+    RCLCPP_INFO(node->get_logger(), "spin period (ms): %zu", opts.spinPeriodMilliseconds);
 
     auto gridPub = node->create_publisher<nav_msgs::msg::OccupancyGrid>("simple_server/occupancy_grid", 1);
 
