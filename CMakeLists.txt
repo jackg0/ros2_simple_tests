@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.20)
 project(ros2_simple_tests VERSION 0.0.1 DESCRIPTION "simple pub/sub/service tests for ros2")
 
-set(CMAKE_CXX_STANDARD 17)
-set(CXX_STANDARD_REQUIRED ON)
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
 
-add_definitions(
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(
     -Wall
     -Wcast-align
     -Wdisabled-optimization
@@ -22,7 +26,9 @@ add_definitions(
     -Wpedantic
     -Wno-unused-parameter # ros2 contains unused parameters
 )
+endif()
 
+find_package(ament_cmake REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(rcl REQUIRED)
 find_package(rcl_logging_spdlog REQUIRED)
@@ -81,3 +87,10 @@ target_include_directories(simple_publisher PUBLIC
     ${rmw_INCLUDE_DIRS}
     ${std_srvs_INCLUDE_DIRS}
 )
+
+install(
+    TARGETS simple_publisher simple_server
+    DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
