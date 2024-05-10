@@ -82,6 +82,7 @@ target_include_directories(simple_publisher PUBLIC
     ${rmw_INCLUDE_DIRS}
 )
 
+<<<<<<< HEAD
 #
 # throughput publisher
 
