@@ -93,4 +93,9 @@ install(
     DESTINATION lib/${PROJECT_NAME}
 )
 
+install(
+    DIRECTORY scripts
+    DESTINATION bin/${PROJECT_NAME}
+)
+
 ament_package()
