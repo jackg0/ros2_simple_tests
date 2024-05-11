@@ -29,6 +29,7 @@ find_package(rcl_logging_spdlog REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rmw REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
 #
@@ -73,4 +74,47 @@ target_include_directories(simple_publisher PUBLIC
     ${rcl_logging_spdlog_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
     ${rmw_INCLUDE_DIRS}
+)
+
+#
+# throughput publisher
+
+add_executable(throughput_publisher throughput_publisher.cc)
+
+target_link_libraries(throughput_publisher PUBLIC
+    rcl::rcl
+    rcl_logging_spdlog::rcl_logging_spdlog
+    rclcpp::rclcpp
+    rmw::rmw
+    ${std_msgs_TARGETS}
+)
+
+target_include_directories(throughput_publisher PUBLIC
+    ${rcl_INCLUDE_DIRS}
+    ${rcl_logging_spdlog_INCLUDE_DIRS}
+    ${rclcpp_INCLUDE_DIRS}
+    ${rmw_INCLUDE_DIRS}
+    ${std_msgs_INCLUDE_DIRS}
+)
+
+#
+# throughput subscriber
+
+add_executable(throughput_subscriber throughput_subscriber.cc)
+
+target_link_libraries(throughput_subscriber PUBLIC
+    rcl::rcl
+    rcl_logging_spdlog::rcl_logging_spdlog
+    rclcpp::rclcpp
+    rmw::rmw
+    spdlog::spdlog
+    ${std_msgs_TARGETS}
+)
+
+target_include_directories(throughput_subscriber PUBLIC
+    ${rcl_INCLUDE_DIRS}
+    ${rcl_logging_spdlog_INCLUDE_DIRS}
+    ${rclcpp_INCLUDE_DIRS}
+    ${rmw_INCLUDE_DIRS}
+    ${std_msgs_INCLUDE_DIRS}
 )
