@@ -26,7 +26,6 @@ add_definitions(
 find_package(nav_msgs REQUIRED)
 find_package(rcl REQUIRED)
 find_package(rcl_logging_spdlog REQUIRED)
-find_package(rclcpp_action REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rmw REQUIRED)
 find_package(spdlog REQUIRED)
@@ -41,7 +40,6 @@ target_link_libraries(simple_server PUBLIC
     ${nav_msgs_TARGETS}
     rcl::rcl
     rcl_logging_spdlog::rcl_logging_spdlog
-    rclcpp_action::rclcpp_action
     rclcpp::rclcpp
     rmw::rmw
     ${std_srvs_TARGETS}
@@ -51,7 +49,6 @@ target_include_directories(simple_server PUBLIC
     ${nav_msgs_INCLUDE_DIRS}
     ${rcl_INCLUDE_DIRS}
     ${rcl_logging_spdlog_INCLUDE_DIRS}
-    ${rclcpp_action_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
     ${rmw_INCLUDE_DIRS}
     ${std_srvs_INCLUDE_DIRS}
@@ -66,18 +63,14 @@ target_link_libraries(simple_publisher PUBLIC
     ${nav_msgs_TARGETS}
     rcl::rcl
     rcl_logging_spdlog::rcl_logging_spdlog
-    rclcpp_action::rclcpp_action
     rclcpp::rclcpp
     rmw::rmw
-    ${std_srvs_TARGETS}
 )
 
 target_include_directories(simple_publisher PUBLIC
     ${nav_msgs_INCLUDE_DIRS}
     ${rcl_INCLUDE_DIRS}
     ${rcl_logging_spdlog_INCLUDE_DIRS}
-    ${rclcpp_action_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
     ${rmw_INCLUDE_DIRS}
-    ${std_srvs_INCLUDE_DIRS}
 )
