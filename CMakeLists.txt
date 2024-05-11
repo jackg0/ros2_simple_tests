@@ -127,7 +127,11 @@ target_include_directories(throughput_subscriber PUBLIC
 )
 
 install(
-    TARGETS simple_publisher simple_server
+    TARGETS
+    simple_publisher
+    simple_server
+    throughput_publisher
+    throughput_subscriber
     DESTINATION lib/${PROJECT_NAME}
 )
 
