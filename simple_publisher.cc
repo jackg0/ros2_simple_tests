@@ -2,9 +2,7 @@
 
 #include <nav_msgs/msg/occupancy_grid.hpp>
 #include <nav_msgs/msg/odometry.hpp>
-#include <std_srvs/srv/trigger.hpp>
 
-#include <rclcpp/callback_group.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <rcutils/logging.h>
 
