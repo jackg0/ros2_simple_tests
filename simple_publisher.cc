@@ -101,17 +101,13 @@ int main(int argc, char **argv)
 
     auto opts = parseOpts(argc, argv);
 
-    auto node = std::make_shared<rclcpp::Node>("simple_server");
+    auto node = std::make_shared<rclcpp::Node>("simple_publisher");
 
     RCLCPP_INFO(node->get_logger(), "spin period (ms): %zu", opts.spinPeriodMilliseconds);
 
-    auto gridPub = node->create_publisher<nav_msgs::msg::OccupancyGrid>("simple_server/occupancy_grid", 1);
+    auto gridPub = node->create_publisher<nav_msgs::msg::OccupancyGrid>("simple_publisher/occupancy_grid", 1);
 
-    auto odomPub = node->create_publisher<nav_msgs::msg::Odometry>("simple_server/odometry", 1);
-
-    auto executor = rclcpp::executors::SingleThreadedExecutor{ };
-
-    executor.add_node(node);
+    auto odomPub = node->create_publisher<nav_msgs::msg::Odometry>("simple_publisher/odometry", 1);
 
     auto spinPeriod = std::chrono::milliseconds(opts.spinPeriodMilliseconds);
 
