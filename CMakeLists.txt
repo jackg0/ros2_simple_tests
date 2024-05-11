@@ -83,6 +83,28 @@ target_include_directories(simple_publisher PUBLIC
 )
 
 #
+# throughput intraprocess
+
+add_executable(throughput_intraprocess throughput_intraprocess.cc)
+
+target_link_libraries(throughput_intraprocess PUBLIC
+    rcl::rcl
+    rcl_logging_spdlog::rcl_logging_spdlog
+    rclcpp::rclcpp
+    rmw::rmw
+    spdlog::spdlog
+    ${std_msgs_TARGETS}
+)
+
+target_include_directories(throughput_intraprocess PUBLIC
+    ${rcl_INCLUDE_DIRS}
+    ${rcl_logging_spdlog_INCLUDE_DIRS}
+    ${rclcpp_INCLUDE_DIRS}
+    ${rmw_INCLUDE_DIRS}
+    ${std_msgs_INCLUDE_DIRS}
+)
+
+#
 # throughput publisher
 
 add_executable(throughput_publisher throughput_publisher.cc)
@@ -129,6 +151,7 @@ install(
     TARGETS
     simple_publisher
     simple_server
+    throughput_intraprocess
     throughput_publisher
     throughput_subscriber
     DESTINATION lib/${PROJECT_NAME}
